@@ -36,6 +36,7 @@ export default function QuizzGame({ history }) {
         <Button variant="primary" onClick={getQuestions}>  Iniciar</Button>
         <Button variant="secondary" onClick={printQuestions}>  Print questions</Button>
         <Button variant="primary" onClick={printQuestions}>  Print questions</Button>
+        <Button variant="primary" onClick={printQuestions}>  Teste</Button>
       </div>
     </Container>
   );
