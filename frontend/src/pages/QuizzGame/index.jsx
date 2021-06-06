@@ -24,7 +24,7 @@ export default function QuizzGame({ history }) {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get(`api/questions?difficulty=${form.difficulty}&category=Filmes&quantity=10`);
+      const response = await axios.get(`api/questions?difficulty=${form.difficulty}&category=${form.category}&quantity=10`);
       console.log(response?.data);
       setState({
         ...state,
@@ -56,6 +56,12 @@ export default function QuizzGame({ history }) {
       difficulty: `${event}`,
     });
   }
+  const setCategory = (event) => {
+    setForm({
+      ...form,
+      category: `${event}`,
+    });
+  }
   return (
 
     <Container className="container">
@@ -65,9 +71,12 @@ export default function QuizzGame({ history }) {
             <Col>
               <Form.Group>
                 <DropdownButton id="dropdown-basic-button" title={form.difficulty || "Difficulty"} onSelect={setDifficulty}>
-
                   {Object.entries(dificuldade).map((key, valor) => <Dropdown.Item key={valor} eventKey={key[0]} >{key[0]}</Dropdown.Item>)}
-
+                </DropdownButton>
+              </Form.Group>
+              <Form.Group>
+                <DropdownButton id="dropdown-basic-button" title={form.category || "Category"} onSelect={setCategory}>
+                  {Object.entries(temas).map((key, valor) => <Dropdown.Item key={valor} eventKey={key[0]} >{key[0]}</Dropdown.Item>)}
                 </DropdownButton>
               </Form.Group>
             </Col>
@@ -79,7 +88,6 @@ export default function QuizzGame({ history }) {
               <Button variant="primary" onClick={getQuizzGameCard}>  Iniciar jogo</Button>
             </div>
           )}
-
         </Container>
       </div>
     </Container>
