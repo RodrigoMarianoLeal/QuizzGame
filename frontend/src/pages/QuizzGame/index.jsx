@@ -1,22 +1,30 @@
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-indent */
 import React, { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Col, Row, Dropdown, DropdownButton } from 'react-bootstrap';
 import axios from '../../utils/api';
 import './quizz.css';
 import QuizzCard from '../../components/QuizzCard';
+import temas from '../../utils/temas'
+import dificuldade from '../../utils/dificuldade'
 
 export default function QuizzGame({ history }) {
   const initialState = {
     questions: [],
   };
+  const initialStateForm = {
+    category: '',
+    difficulty: '',
+  }
+
   const [state, setState] = useState(initialState);
   const [questions, setQuestions] = useState();
   const [showCardGame, setShowCardGame] = useState(false);
+  const [form, setForm] = useState(initialStateForm);
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get('api/questions?difficulty=easy&category=Filmes&quantity=10');
+      const response = await axios.get(`api/questions?difficulty=${form.difficulty}&category=Filmes&quantity=10`);
       console.log(response?.data);
       setState({
         ...state,
@@ -39,25 +47,40 @@ export default function QuizzGame({ history }) {
   const printQuestions = () => {
     console.log(state.questions);
   };
+  const initGame = () => {
+
+  }
+  const setDifficulty = (event) => {
+    setForm({
+      ...form,
+      difficulty: `${event}`,
+    });
+  }
   return (
+
     <Container className="container">
       <div className="back">
         <Container>
-        {showCardGame ? <QuizzCard questions={questions} /> : (
-<div>
-        <Button variant="primary" onClick={getQuestions}>  Iniciar</Button>
-<<<<<<< HEAD
-        <Button variant="secondary" onClick={prepareQuestions}>  Preparar Questões</Button>
-        <Button variant="primary" onClick={getQuizzGameCard}>  Iniciar jogo</Button>
-</div>
-        )}
+          <Form>
+            <Col>
+              <Form.Group>
+                <DropdownButton id="dropdown-basic-button" title={form.difficulty || "Difficulty"} onSelect={setDifficulty}>
+
+                  {Object.entries(dificuldade).map((key, valor) => <Dropdown.Item key={valor} eventKey={key[0]} >{key[0]}</Dropdown.Item>)}
+
+                </DropdownButton>
+              </Form.Group>
+            </Col>
+          </Form>
+          {showCardGame ? <QuizzCard questions={questions} /> : (
+            <div>
+              <Button variant="primary" onClick={getQuestions}>  Iniciar</Button>
+              <Button variant="secondary" onClick={prepareQuestions}>  Preparar Questões</Button>
+              <Button variant="primary" onClick={getQuizzGameCard}>  Iniciar jogo</Button>
+            </div>
+          )}
 
         </Container>
-=======
-        <Button variant="secondary" onClick={printQuestions}>  Print questions</Button>
-        <Button variant="primary" onClick={printQuestions}>  Print questions</Button>
-        <Button variant="primary" onClick={printQuestions}>  Teste</Button>
->>>>>>> e1ea6e3072d9dc627137a634ce897ac9abdd4203
       </div>
     </Container>
   );
