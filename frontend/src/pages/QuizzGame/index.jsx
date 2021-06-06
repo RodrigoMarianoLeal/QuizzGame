@@ -46,12 +46,18 @@ export default function QuizzGame({ history }) {
         {showCardGame ? <QuizzCard questions={questions} /> : (
 <div>
         <Button variant="primary" onClick={getQuestions}>  Iniciar</Button>
+<<<<<<< HEAD
         <Button variant="secondary" onClick={prepareQuestions}>  Preparar Questões</Button>
         <Button variant="primary" onClick={getQuizzGameCard}>  Iniciar jogo</Button>
 </div>
         )}
 
         </Container>
+=======
+        <Button variant="secondary" onClick={printQuestions}>  Print questions</Button>
+        <Button variant="primary" onClick={printQuestions}>  Print questions</Button>
+        <Button variant="primary" onClick={printQuestions}>  Teste</Button>
+>>>>>>> e1ea6e3072d9dc627137a634ce897ac9abdd4203
       </div>
     </Container>
   );
