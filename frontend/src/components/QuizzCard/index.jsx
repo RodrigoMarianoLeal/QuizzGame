@@ -11,7 +11,6 @@ export default function QuizzCard({ questions }) {
   const [questionsData, setQuestions] = useState(questions);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [streakMensage, setStreakMensage ] = useState('');
   const [mensageError] = useState('errou');
   const [reportMensage, setReportMensage ] = useState('');
 
@@ -19,10 +18,16 @@ export default function QuizzCard({ questions }) {
     if (questionsData[questionNumber].alternativas[value] === questionsData[questionNumber].correta) {
       setScore(score + 10);
       setStreak((streak + 1));
-      setReportMensage(mensage[streak])
+      if(streak > mensage.length-1){
+        setReportMensage(mensage[mensage.length-1])
+      }
+      else{
+        setReportMensage(mensage[streak])
+      }
+      
     }else {
       setReportMensage(mensageError)
-      setStreak(streak - streak);
+      setStreak(0);
     }
     if ((questionNumber) < 9) {
       setQuestionNumber(questionNumber + 1);
