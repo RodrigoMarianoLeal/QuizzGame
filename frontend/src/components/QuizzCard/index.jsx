@@ -4,15 +4,25 @@ import {
   Container, Row, Button, Col,
 } from 'react-bootstrap';
 import './quizzcard.css';
+import mensage from '../../utils/mensage_streak.js';
 
 export default function QuizzCard({ questions }) {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [questionsData, setQuestions] = useState(questions);
   const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [streakMensage, setStreakMensage ] = useState('');
+  const [mensageError] = useState('errou');
+  const [reportMensage, setReportMensage ] = useState('');
 
   const checkIfCorrect = (value) => {
     if (questionsData[questionNumber].alternativas[value] === questionsData[questionNumber].correta) {
       setScore(score + 10);
+      setStreak((streak + 1));
+      setReportMensage(mensage[streak])
+    }else {
+      setReportMensage(mensageError)
+      setStreak(streak - streak);
     }
     if ((questionNumber) < 9) {
       setQuestionNumber(questionNumber + 1);
@@ -29,6 +39,9 @@ export default function QuizzCard({ questions }) {
           <Col>
             <p className="titulo">
               {`Score: ${score}`}
+            </p>
+            <p className="titulo">
+              {`Streak: ${streak}`}
             </p>
           </Col>
           <Col>
@@ -47,6 +60,9 @@ export default function QuizzCard({ questions }) {
             {' '}
             {questionsData[questionNumber].enunciado}
           </p>
+        </Row>
+        <Row className="titulo">
+        {`${reportMensage}`}
         </Row>
         <Row>
           <Button onClick={() => checkIfCorrect(0)}>{questionsData[questionNumber].alternativas[0]}</Button>
